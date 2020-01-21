@@ -1,0 +1,30 @@
+.todo-list {
+  margin: 0 auto;
+  
+}
+
+.btn-action {
+  margin-left: 8px;
+  margin-bottom: 8px;
+  height: 25px;
+  width: 80px;
+  background-color: lightskyblue;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.li-text {
+  font-size: 16px;
+}
+
+.todo-input {
+  height: 20px;
+  font-size: 14px;
+}
+
+.btn-add {
+  width: 50px;
+  height: 25px;
+  /* border-radius: 6px; */
+  margin-left: 8px;
+}
