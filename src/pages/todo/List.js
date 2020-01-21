@@ -15,7 +15,7 @@ export default class TodoList extends Component {
   ]
   
   add() {
-    console.log(this.input)
+    // console.log(this.input)
     // this.props.addTodo(this.input.value);
     // this.input.value = "";
   }
