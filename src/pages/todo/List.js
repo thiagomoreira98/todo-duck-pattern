@@ -1,39 +1,45 @@
 import React, { Component } from 'react';
-import './styles.css'
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { Creators as TodoActions } from "../../store/ducks/todos"
+import './styles.css';
+class TodoList extends Component {
 
-export default class TodoList extends Component {
+  add(event) {
+    event.preventDefault();
 
-  state = {
+    if(!this.input.value)
+      return alert('Informe um valor');
 
-  }
-
-  input = {};
-
-  todos = [
-    { id: 1, name: 'test 1' },
-    { id: 2, name: 'test 2' },
-  ]
-  
-  add() {
-    // console.log(this.input)
-    // this.props.addTodo(this.input.value);
-    // this.input.value = "";
+    this.props.addTodo(this.input.value);
+    this.input.value = "";
   }
 
   render() {
+    const { todos, toogleTodo, removeTodo } = this.props;
+
     return (
       <div className="todo-list">
-        <form>
-          <input className="todo-input" type="text" placeholder="something" />
-          <button className="btn-add" type="button" onClick={() => this.add()}>Add</button>
+        <form className="todo-form" onSubmit={event => this.add(event)}>
+          <input 
+            className="todo-input" 
+            placeholder="something"
+            ref={ref => this.input = ref}
+          />
+          <button className="btn-add" type="submit">Add</button>
         </form>
 
         <ul>
-          {this.todos.map(t => (
-            <li key={t.id} style={{ listStyle: 'none' }}>
-              <span className="li-text">{t.name}</span>
-              <button className="btn-action">Toogle</button>
-              <button className="btn-action">Remove</button>
+          {todos.map(t => (
+            <li key={t.id}>
+              <span 
+                className="li-text" 
+                style={{ textDecoration: t.complete ? 'line-through': '' }}
+              >
+                {t.text}
+              </span>
+              <button className="btn-action" onClick={() => toogleTodo(t.id)}>Toogle</button>
+              <button className="btn-action" onClick={() => removeTodo(t.id)}>Remove</button>
             </li>
           ))}
         </ul>
@@ -41,3 +47,13 @@ export default class TodoList extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  todos: state.todos
+});
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(TodoActions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
